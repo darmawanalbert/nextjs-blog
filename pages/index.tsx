@@ -4,6 +4,8 @@ import Layout from '../components/layout'
 
 import { getSortedPostsData } from '../lib/posts'
 
+import { GetStaticProps } from 'next'
+
 export default function Home( { allPostsData }) {
   return (
     <Layout>
@@ -34,7 +36,7 @@ export default function Home( { allPostsData }) {
 }
 
 // Static Generation with Data
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async context => {
   const allPostsData = getSortedPostsData()
   return {
     props: {
