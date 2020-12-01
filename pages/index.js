@@ -2,7 +2,9 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Layout from '../components/layout'
 
-export default function Home() {
+import { getSortedPostsData } from '../lib/posts'
+
+export default function Home( { allPostsData }) {
   return (
     <Layout>
       <Head>
@@ -13,8 +15,30 @@ export default function Home() {
       <main>
         <h1>Home Page</h1>
         <h2><Link href="/posts/first-post"><a>Go to post</a></Link></h2>
+        <h2>Blog</h2>
+        <ul>
+          {allPostsData.map(({ id, date, title }) => (
+            <li key={id}>
+              {title}
+              <br />
+              {id}
+              <br />
+              {date}
+            </li>
+          ))}
+        </ul>
       </main>
 
     </Layout>
   )
+}
+
+// Static Generation with Data
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
 }
